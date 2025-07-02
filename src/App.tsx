@@ -1,19 +1,25 @@
-// src/App.tsx
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/home/Home';
-import Navbar from './components/navbar/Navbar'; // Será Navbar MUI
-import Footer from './components/footer/Footer'; // Será Footer MUI
+import Navbar from './components/navbar/Navbar';
+import Footer from './components/footer/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Importe componentes de Material UI para estrutura básica, se quiser
-import { Box, createTheme, ThemeProvider, CssBaseline } from '@mui/material';
+// Importar os novos componentes de Categoria
+import ListaCategorias from './pages/categoria/ListaCategorias';
+import FormCategoria from './pages/categoria/FormCategoria';
+import DeleteCategoria from './pages/categoria/DeleteCategoria';
 
-// Opcional: Tema personalizado do MUI
+
+// Para o Material UI
+import { Box, createTheme, ThemeProvider, CssBaseline } from '@mui/material';
+import FormCategoriaEdicao from './pages/categoria/FormCategoriaEdicao';
+
+// Opcional: Tema personalizado do MUI (pode ser mais detalhado)
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#007bff', // Azul primário (pode ser o azul da sua imagem)
+      main: '#007bff', // Azul primário (pode ser o azul do navbar)
     },
     secondary: {
       main: '#FFC107', // Amarelo (para destaque, se necessário)
@@ -27,19 +33,23 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline /> {/* Para reset de CSS básico */}
+      <CssBaseline />
       <BrowserRouter>
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', bgcolor: 'background.default' }}>
-          <Navbar />
-          <Box component="main" sx={{ flexGrow: 1, p: 3 }}> {/* flexGrow para ocupar espaço restante */}
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/home" element={<Home />} />
-              {/* Rotas de categoria CRUD virão aqui depois */}
-            </Routes>
-          </Box>
-          <Footer />
+        <Navbar />
+        <Box component="main" sx={{ flexGrow: 1, p: 3, minHeight: 'calc(100vh - 64px - 80px)' }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+
+            {/* Rotas para Categoria */}
+            <Route path="/categorias" element={<ListaCategorias />} />
+            <Route path="/cadastroCategoria" element={<FormCategoria />} /> {/* Aponta para o de CADASTRO */}
+            <Route path="/editarCategoria/:id" element={<FormCategoriaEdicao />} /> {/* Aponta para o de EDIÇÃO */}
+            <Route path="/deletarCategoria/:id" element={<DeleteCategoria />} />
+
+          </Routes>
         </Box>
+        <Footer />
         <ToastContainer />
       </BrowserRouter>
     </ThemeProvider>
