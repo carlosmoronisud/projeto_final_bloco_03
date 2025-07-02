@@ -1,23 +1,35 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useNavigate, Link } from 'react-router-dom';
-import { getAllProdutos } from '../../services/ProdutoService';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom'; // <<<< Importe useSearchParams
+
+// Removido: import { useSearch } from '../../contexts/SearchContext';
+
 import { CircularProgress } from '@mui/material';
+
 // Material UI
 import { Box, Typography, Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { Edit as EditIcon, Delete as DeleteIcon, Add as AddIcon } from '@mui/icons-material';
-import type Produto from '../../components/models/Produto';
-import { tratarErro } from '../../services/TratarErro';
-import { useEffect, useState } from 'react';
+import { getAllProdutos, getProdutosByNome } from '../services/ProdutoService';
+import type Produto from '../components/models/Produto';
+import { tratarErro } from '../services/TratarErro';
 
-function ListaProdutos() {
+function ProdutosBuscaPage() {
     const [produtos, setProdutos] = useState<Produto[]>([]);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
-    async function buscarProdutos() {
+    const [searchParams] = useSearchParams(); // <<<< NOVO: Obter searchParams da URL
+    const searchTerm = searchParams.get('nome') || ''; // <<<< Obter o termo 'nome' da URL ou vazio
+
+    async function buscarProdutosFiltrados() {
         setLoading(true);
         try {
-            const response = await getAllProdutos();          
-            setProdutos(response);        
+            let response: Produto[];
+            if (searchTerm) { // Se há um termo de busca, chame a API de busca por nome
+                response = await getProdutosByNome(searchTerm);
+            } else { // Se o termo estiver vazio, pode mostrar todos, ou uma mensagem de "nenhum termo"
+                response = await getAllProdutos(); // Retorna todos se a busca for vazia na URL
+            }
+            setProdutos(response);
         } catch (error: any) {
             tratarErro(error, 'Erro ao buscar produtos.');
         } finally {
@@ -25,9 +37,10 @@ function ListaProdutos() {
         }
     }
 
+    // Este useEffect agora depende de searchTerm (lido da URL)
     useEffect(() => {
-        buscarProdutos();
-    }, []); 
+        buscarProdutosFiltrados();
+    }, [searchTerm]); // Re-busque produtos sempre que searchTerm (na URL) mudar
 
     if (loading) {
         return (
@@ -40,7 +53,10 @@ function ListaProdutos() {
     return (
         <Box sx={{ p: 4, maxWidth: 1000, mx: 'auto' }}>
             <Typography variant="h4" component="h1" align="center" color="primary" gutterBottom sx={{ fontWeight: 'bold', mb: 4 }}>
-                Lista de Produtos
+                Resultados da Busca
+            </Typography>
+            <Typography variant="h6" align="center" color="text.secondary" sx={{ mb: 4 }}>
+                {searchTerm ? `Exibindo resultados para: "${searchTerm}"` : 'Nenhum termo de busca fornecido. Exibindo todos os produtos.'}
             </Typography>
 
             <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 3 }}>
@@ -56,6 +72,7 @@ function ListaProdutos() {
 
             {produtos.length === 0 ? (
                 <Typography variant="h6" align="center" color="text.secondary" sx={{ mt: 8 }}>
+                    {searchTerm ? `Nenhum produto encontrado com o nome "${searchTerm}".` : 'Nenhum produto encontrado. Cadastre um novo!'}
                 </Typography>
             ) : (
                 <TableContainer component={Paper} sx={{ boxShadow: 3, borderRadius: 2 }}>
@@ -77,11 +94,7 @@ function ListaProdutos() {
                                     <TableCell>{produto.nome}</TableCell>
                                     <TableCell>R$ {produto.preco?.toFixed(2)}</TableCell>
                                     <TableCell>
-                                        <img
-                                            src={produto.foto && produto.foto !== "" ? produto.foto : "https://via.placeholder.com/50x50/F5F5F5/808080?text=NF"} // "NF" = No Photo
-                                            alt={produto.nome}
-                                            style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '4px' }}
-                                        />
+                                        <img src={produto.foto} alt={produto.nome} style={{ width: '50px', height: '50px', objectFit: 'cover', borderRadius: '4px' }} />
                                     </TableCell>
                                     <TableCell>{produto.categoria?.nome || 'N/A'}</TableCell>
                                     <TableCell align="center">
@@ -110,6 +123,4 @@ function ListaProdutos() {
     );
 }
 
-export default ListaProdutos;
-
-
+export default ProdutosBuscaPage;

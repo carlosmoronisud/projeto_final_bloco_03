@@ -23,6 +23,7 @@ import ListaProdutos from './pages/produtos/ListaProdutos';
 import FormProdutoCadastro from './pages/produtos/FormProdutoCadastro';
 import FormProdutoEdicao from './pages/produtos/FormProdutoEdicao';
 import DeleteProduto from './pages/produtos/DeleteProdutos';
+import ProdutosBuscaPage from './pages/ProdutosBuscaPage';
 
 const theme = createTheme({
   palette: {
@@ -32,43 +33,40 @@ const theme = createTheme({
   },
 });
 
-function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <BrowserRouter>
-        <Navbar />
-        <Box component="main" sx={{ flexGrow: 1, p: 3, minHeight: 'calc(100vh - 64px - 80px)' }}>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/home" element={<Home />} />
+ function App() {
+      return (
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <BrowserRouter>
+            <Navbar />
+            <Box component="main" sx={{ flexGrow: 1, p: 3, minHeight: 'calc(100vh - 64px - 80px)' }}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/home" element={<Home />} />
 
-            {/* Rotas de Categoria (CRUD Completo) */}
-            <Route path="/categorias" element={<ListaCategorias />} />
-            <Route path="/cadastroCategoria" element={<FormCategoria />} />
-            <Route path="/editarCategoria/:id" element={<FormCategoriaEdicao />} />
-            <Route path="/deletarCategoria/:id" element={<DeleteCategoria />} />
+                {/* Rotas de Categoria */}
+                <Route path="/categorias" element={<ListaCategorias />} />
+                <Route path="/cadastroCategoria" element={<FormCategoria />} />
+                <Route path="/editarCategoria/:id" element={<FormCategoriaEdicao />} />
+                <Route path="/deletarCategoria/:id" element={<DeleteCategoria />} />
 
-            {/* Rotas para Produtos (agora com CRUD completo e formulários separados) */}
-            <Route path="/produtos" element={<ListaProdutos />} />
-            <Route path="/cadastroProduto" element={<FormProdutoCadastro />} /> {/* <<<< CORRIGIDO AQUI */}
-            <Route path="/editarProduto/:id" element={<FormProdutoEdicao />} />     {/* <<<< CORRIGIDO AQUI */}
-            <Route path="/deletarProduto/:id" element={<DeleteProduto />} />
+                {/* Rotas para Produtos */}
+                <Route path="/produtos" element={<ListaProdutos />} /> {/* Lista TODOS os produtos */}
+                <Route path="/cadastroProduto" element={<FormProdutoCadastro />} />
+                <Route path="/editarProduto/:id" element={<FormProdutoEdicao />} />
+                <Route path="/deletarProduto/:id" element={<DeleteProduto />} />
+                <Route path="/produtos/busca" element={<ProdutosBuscaPage />} /> {/* <<<< NOVA ROTA DE BUSCA */}
 
-            {/* Rota para Perfil */}
-            <Route path="/perfil" element={<Perfil />} />
+                {/* Rota para Perfil */}
+                <Route path="/perfil" element={<Perfil />} />
 
-            {/* Rotas de Autenticação (temporariamente fora de foco) */}
-            {/* <Route path="/login" element={<Login />} /> */}
-            {/* <Route path="/cadastro" element={<Cadastro />} /> */}
+              </Routes>
+            </Box>
+            <Footer />
+            <ToastContainer />
+          </BrowserRouter>
+        </ThemeProvider>
+      );
+    }
 
-          </Routes>
-        </Box>
-        <Footer />
-        <ToastContainer />
-      </BrowserRouter>
-    </ThemeProvider>
-  );
-}
-
-export default App;
+    export default App;

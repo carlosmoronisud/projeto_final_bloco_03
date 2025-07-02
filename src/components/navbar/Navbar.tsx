@@ -1,6 +1,6 @@
-// src/components/navbar/Navbar.tsx
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Importe useNavigate
+import React, { useState } from 'react'; // <<<< Adicionado useState
+import { Link, useNavigate } from 'react-router-dom';
+
 
 // Material UI
 import AppBar from '@mui/material/AppBar';
@@ -17,26 +17,33 @@ import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import CategoryIcon from '@mui/icons-material/Category';
 import InventoryIcon from '@mui/icons-material/Inventory';
-import { useSearch } from '../../../contexts/SearchContext';
 
 function Navbar() {
-  const { searchTerm, setSearchTerm } = useSearch(); // <<<< Obter searchTerm e setSearchTerm do useSearch
-  const navigate = useNavigate(); // Hook para navegação programática
+  const [localSearchTerm, setLocalSearchTerm] = useState(''); // <<<< NOVO: Estado local
+  const navigate = useNavigate();
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value); // Atualiza o termo de busca no contexto
+    setLocalSearchTerm(event.target.value); // Atualiza o estado local
   };
 
-  const handleSearchSubmit = (event: React.FormEvent) => { // Novo handler para submissão (Enter)
-    event.preventDefault(); // Previne o recarregamento da página padrão de um formulário
-    // Ao submeter a busca, sempre navegamos para a página de produtos
-    navigate('/produtos');
+  const handleSearchSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    // Navega para a página de busca com o termo nos query parameters
+    if (localSearchTerm) {
+      navigate(`/produtos/busca?nome=${localSearchTerm}`);
+    } else {
+      // Se a busca estiver vazia, vai para a lista completa de produtos
+      navigate('/produtos');
+    }
   };
 
-  // Função para lidar com o clique no ícone de lupa
   const handleSearchIconClick = () => {
-    // Se o usuário clicar na lupa, também o levamos para a página de produtos
-    navigate('/produtos');
+    // Ao clicar na lupa, se tiver termo, navega com a busca, senão para todos os produtos
+    if (localSearchTerm) {
+      navigate(`/produtos/busca?nome=${localSearchTerm}`);
+    } else {
+      navigate('/produtos');
+    }
   };
 
   return (
@@ -60,8 +67,8 @@ function Navbar() {
             placeholder="Procure produtos..."
             size="small"
             fullWidth
-            value={searchTerm} // Conecta o valor do input ao estado do contexto
-            onChange={handleSearchChange} // Atualiza o estado do contexto ao digitar
+            value={localSearchTerm} 
+            onChange={handleSearchChange} 
             sx={{
               bgcolor: 'white',
               borderRadius: 1,
@@ -74,7 +81,6 @@ function Navbar() {
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  {/* Ícone de lupa que também aciona a navegação */}
                   <SearchIcon sx={{ color: 'action.active', cursor: 'pointer' }} onClick={handleSearchIconClick} />
                 </InputAdornment>
               ),
