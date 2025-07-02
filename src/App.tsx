@@ -5,28 +5,30 @@ import Footer from './components/footer/Footer';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Importar os novos componentes de Categoria
+// Componentes de Categoria (já feitos)
 import ListaCategorias from './pages/categoria/ListaCategorias';
-import FormCategoria from './pages/categoria/FormCategoria';
+import FormCategoria from './pages/categoria/FormCategoria'; // Para Cadastro de Categoria
+import FormCategoriaEdicao from './pages/categoria/FormCategoriaEdicao'; // Para Edição de Categoria
 import DeleteCategoria from './pages/categoria/DeleteCategoria';
 
+// Componentes de Produtos (agora com separação clara de cadastro e edição)
+
+
+// Componente de Perfil
+import Perfil from './pages/perfil/Perfil';
 
 // Para o Material UI
 import { Box, createTheme, ThemeProvider, CssBaseline } from '@mui/material';
-import FormCategoriaEdicao from './pages/categoria/FormCategoriaEdicao';
+import ListaProdutos from './pages/produtos/ListaProdutos';
+import FormProdutoCadastro from './pages/produtos/FormProdutoCadastro';
+import FormProdutoEdicao from './pages/produtos/FormProdutoEdicao';
+import DeleteProduto from './pages/produtos/DeleteProdutos';
 
-// Opcional: Tema personalizado do MUI (pode ser mais detalhado)
 const theme = createTheme({
   palette: {
-    primary: {
-      main: '#007bff', // Azul primário (pode ser o azul do navbar)
-    },
-    secondary: {
-      main: '#FFC107', // Amarelo (para destaque, se necessário)
-    },
-    background: {
-      default: '#E0FFFF', // Cor de fundo ciano principal
-    },
+    primary: { main: '#007bff' },
+    secondary: { main: '#FFC107' },
+    background: { default: '#E0FFFF' },
   },
 });
 
@@ -41,11 +43,24 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
 
-            {/* Rotas para Categoria */}
+            {/* Rotas de Categoria (CRUD Completo) */}
             <Route path="/categorias" element={<ListaCategorias />} />
-            <Route path="/cadastroCategoria" element={<FormCategoria />} /> {/* Aponta para o de CADASTRO */}
-            <Route path="/editarCategoria/:id" element={<FormCategoriaEdicao />} /> {/* Aponta para o de EDIÇÃO */}
+            <Route path="/cadastroCategoria" element={<FormCategoria />} />
+            <Route path="/editarCategoria/:id" element={<FormCategoriaEdicao />} />
             <Route path="/deletarCategoria/:id" element={<DeleteCategoria />} />
+
+            {/* Rotas para Produtos (agora com CRUD completo e formulários separados) */}
+            <Route path="/produtos" element={<ListaProdutos />} />
+            <Route path="/cadastroProduto" element={<FormProdutoCadastro />} /> {/* <<<< CORRIGIDO AQUI */}
+            <Route path="/editarProduto/:id" element={<FormProdutoEdicao />} />     {/* <<<< CORRIGIDO AQUI */}
+            <Route path="/deletarProduto/:id" element={<DeleteProduto />} />
+
+            {/* Rota para Perfil */}
+            <Route path="/perfil" element={<Perfil />} />
+
+            {/* Rotas de Autenticação (temporariamente fora de foco) */}
+            {/* <Route path="/login" element={<Login />} /> */}
+            {/* <Route path="/cadastro" element={<Cadastro />} /> */}
 
           </Routes>
         </Box>

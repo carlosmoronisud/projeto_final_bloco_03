@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react'; // Não precisa mais de useEffect se for apenas cadastro
+
 import { useNavigate } from 'react-router-dom';
 // Mudar para postCategoria, pois só faremos POST aqui
-import { postCategoria, tratarErro } from '../../services/Service';
+
 
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
@@ -10,6 +10,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Box, Typography, Button, TextField } from '@mui/material';
 import type Categoria from '../../components/models/Categoria';
+import { postCategoria } from '../../services/CategoriaService';
+import { tratarErro } from '../../services/TratarErro';
+
 
 
 // Esquema de validação com Zod

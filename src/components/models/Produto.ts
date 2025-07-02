@@ -1,11 +1,9 @@
- // src/models/Produto.ts
-    import type Categoria from "./Categoria";
+import type Categoria from "./Categoria";
 
-    export default interface Produto {
-        id: number;
-        nome: string;
-        descricao: string;
-        preco: number;
-        quantidade: number;
-        categoria?: Categoria;
-    }
+export default interface Produto {
+    id?: number;
+    nome: string;
+    preco: number;
+    foto: string;
+    categoria?: Categoria;
+}

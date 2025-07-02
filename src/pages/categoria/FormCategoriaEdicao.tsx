@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { putCategoria, getCategoriaById, tratarErro } from '../../services/Service'; // Apenas put e getById
+
 
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
@@ -9,11 +9,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Box, Typography, Button, TextField } from '@mui/material';
 import type Categoria from '../../components/models/Categoria';
+import { getCategoriaById, putCategoria } from '../../services/CategoriaService';
+import { tratarErro } from '../../services/TratarErro';
+
 
 
 // Esquema de validação com Zod (igual ao de cadastro)
 const categoriaSchema = z.object({
-  id: z.number().optional(), // ID é opcional no schema, mas será obrigatório para o PUT
+  id: z.number().optional(), 
   nome: z.string()
     .min(3, { message: 'O Nome da Categoria é obrigatório e deve ter no mínimo 3 caracteres.' })
     .max(100, { message: 'O Nome da Categoria deve ter no máximo 100 caracteres.' }),

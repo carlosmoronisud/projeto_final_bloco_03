@@ -1,14 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
     import { useNavigate, useParams } from 'react-router-dom';
-    import { getCategoriaById, deleteCategoria, tratarErro } from '../../services/Service';
+   import { deleteCategoria, getCategoriaById } from '../../services/CategoriaService';
     import type Categoria from '../../components/models/Categoria';
     import { toast } from 'react-toastify';
-    import { ClipLoader } from 'react-spinners';
+    import { CircularProgress } from '@mui/material';
 
     // Material UI
     import { Box, Typography, Button, Paper } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { tratarErro } from '../../services/TratarErro';
 
     function DeleteCategoria() {
       const navigate = useNavigate();
@@ -55,7 +56,7 @@ import { useEffect, useState } from 'react';
       if (loading) {
         return (
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-            <ClipLoader color="#36d7b7" size={50} />
+            <CircularProgress color="primary" />
           </Box>
         );
       }
