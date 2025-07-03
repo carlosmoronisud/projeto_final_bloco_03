@@ -11,9 +11,6 @@ import FormCategoria from './pages/categoria/FormCategoria'; // Para Cadastro de
 import FormCategoriaEdicao from './pages/categoria/FormCategoriaEdicao'; // Para Edição de Categoria
 import DeleteCategoria from './pages/categoria/DeleteCategoria';
 
-// Componentes de Produtos (agora com separação clara de cadastro e edição)
-
-
 // Componente de Perfil
 import Perfil from './pages/perfil/Perfil';
 
@@ -25,6 +22,14 @@ import FormProdutoEdicao from './pages/produtos/FormProdutoEdicao';
 import DeleteProduto from './pages/produtos/DeleteProdutos';
 import ProdutosBuscaPage from './pages/ProdutosBuscaPage';
 
+// Importando o PrivateRoute para proteger rotas
+import PrivateRoute from './routes/PrivateRoute'
+
+
+// Importando o componente de login com Google
+import LoginGoogle from './components/login/LoginGoogle';
+
+// Configuração do tema do Material UI
 const theme = createTheme({
   palette: {
     primary: { main: '#007bff' },
@@ -35,37 +40,84 @@ const theme = createTheme({
 
  function App() {
       return (
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <BrowserRouter>
-            <Navbar />
-            <Box component="main" sx={{ flexGrow: 1, p: 3, minHeight: 'calc(100vh - 64px - 80px)' }}>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/home" element={<Home />} />
+        <>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <BrowserRouter>
+              <Navbar />
+              <Box component="main" sx={{ flexGrow: 1, p: 3, minHeight: 'calc(100vh - 64px - 80px)' }}>
+                <Routes>
+                    
+                  <Route path="/" element={<Home />} />
+                  <Route path="/home" element={<Home />} />
+                  
 
-                {/* Rotas de Categoria */}
-                <Route path="/categorias" element={<ListaCategorias />} />
-                <Route path="/cadastroCategoria" element={<FormCategoria />} />
-                <Route path="/editarCategoria/:id" element={<FormCategoriaEdicao />} />
-                <Route path="/deletarCategoria/:id" element={<DeleteCategoria />} />
+                  {/* Rotas de Categoria */}
+                  <Route path="/categorias" element={<ListaCategorias />} />
+                  <Route
+                    path="/cadastroCategoria" 
+                    element={
+                      <PrivateRoute>
+                        <FormCategoria />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/editarCategoria/:id"
+                    element={
+                      <PrivateRoute>
+                        <FormCategoriaEdicao />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/deletarCategoria/:id"
+                    element={
+                      <PrivateRoute>
+                        <DeleteCategoria />
+                      </PrivateRoute>
+                    }
+                  />
+                  {/* Rotas para Produtos */}
+                  <Route path="/produtos" element={<ListaProdutos />} /> {/* Lista TODOS os produtos */}
+                  <Route
+                    path="/cadastroProduto"
+                    element={
+                      <PrivateRoute>
+                        <FormProdutoCadastro />
+                      </PrivateRoute>
+                    }
+                  />             
+                  <Route
+                    path="/editarProduto/:id"
+                    element={
+                      <PrivateRoute>
+                        <FormProdutoEdicao />
+                      </PrivateRoute>
+                    }
+                  />
+                  <Route
+                    path="/deletarProduto/:id"
+                    element={
+                      <PrivateRoute>
+                        <DeleteProduto/>
+                      </PrivateRoute>
+                    }
+                  />
+                  {/* Rota para busca de produtos */}
+                  <Route path="/produtos/busca" element={<ProdutosBuscaPage />} /> {/* <<<< NOVA ROTA DE BUSCA */}
 
-                {/* Rotas para Produtos */}
-                <Route path="/produtos" element={<ListaProdutos />} /> {/* Lista TODOS os produtos */}
-                <Route path="/cadastroProduto" element={<FormProdutoCadastro />} />
-                <Route path="/editarProduto/:id" element={<FormProdutoEdicao />} />
-                <Route path="/deletarProduto/:id" element={<DeleteProduto />} />
-                <Route path="/produtos/busca" element={<ProdutosBuscaPage />} /> {/* <<<< NOVA ROTA DE BUSCA */}
-
-                {/* Rota para Perfil */}
-                <Route path="/perfil" element={<Perfil />} />
-
-              </Routes>
-            </Box>
-            <Footer />
-            <ToastContainer />
-          </BrowserRouter>
-        </ThemeProvider>
+                  {/* Rota para Perfil */}
+                  <Route path="/login" element={<LoginGoogle />} />                  
+                  <Route path="/perfil" element={<Perfil />} />
+                  
+                </Routes>
+              </Box>
+              <Footer />
+              <ToastContainer />
+            </BrowserRouter>
+          </ThemeProvider>
+        </>
       );
     }
 

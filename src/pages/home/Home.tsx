@@ -75,7 +75,7 @@ function Home() {
       >
         <Box
           component="img"
-          src="https://via.placeholder.com/600x400/9370DB/FFFFFF?text=Ilustracao+Farmaceuticos" // Substitua pela imagem real
+          src="https://ik.imagekit.io/8h7kfljfc/imagem/img/images-removebg-preview.png?updatedAt=1751501409939" // Substitua pela imagem real
           alt="Ilustração de Farmacêuticos"
           sx={{
             maxWidth: '100%',

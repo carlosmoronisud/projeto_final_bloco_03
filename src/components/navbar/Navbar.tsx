@@ -1,6 +1,7 @@
-import React, { useState } from 'react'; // <<<< Adicionado useState
-import { Link, useNavigate } from 'react-router-dom';
+// Atualização do Navbar para remover o carrinho e mostrar a foto do usuário + botão de logout
 
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 // Material UI
 import AppBar from '@mui/material/AppBar';
@@ -10,35 +11,36 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
+import Avatar from '@mui/material/Avatar';
 
 // Ícones do Material UI
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 import CategoryIcon from '@mui/icons-material/Category';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import { useAuth } from '../../contexts/AuthContext';
+
+
 
 function Navbar() {
-  const [localSearchTerm, setLocalSearchTerm] = useState(''); // <<<< NOVO: Estado local
+  const [localSearchTerm, setLocalSearchTerm] = useState('');
   const navigate = useNavigate();
+  const { user, setUser } = useAuth();
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLocalSearchTerm(event.target.value); // Atualiza o estado local
+    setLocalSearchTerm(event.target.value);
   };
 
   const handleSearchSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    // Navega para a página de busca com o termo nos query parameters
     if (localSearchTerm) {
       navigate(`/produtos/busca?nome=${localSearchTerm}`);
     } else {
-      // Se a busca estiver vazia, vai para a lista completa de produtos
       navigate('/produtos');
     }
   };
 
   const handleSearchIconClick = () => {
-    // Ao clicar na lupa, se tiver termo, navega com a busca, senão para todos os produtos
     if (localSearchTerm) {
       navigate(`/produtos/busca?nome=${localSearchTerm}`);
     } else {
@@ -49,7 +51,6 @@ function Navbar() {
   return (
     <AppBar position="static" sx={{ bgcolor: '#192A56' }}>
       <Toolbar sx={{ justifyContent: 'space-between', padding: '8px 24px' }}>
-        {/* Logo Farmácia */}
         <Button
           component={Link}
           to="/home"
@@ -60,15 +61,14 @@ function Navbar() {
           <Typography variant="h6" component="span" sx={{ color: 'white' }}>MÁCIA</Typography>
         </Button>
 
-        {/* Campo de Busca dentro de um form para onSubmit */}
         <Box component="form" onSubmit={handleSearchSubmit} sx={{ flexGrow: 1, mx: 4, maxWidth: 400 }}>
           <TextField
             variant="outlined"
             placeholder="Procure produtos..."
             size="small"
             fullWidth
-            value={localSearchTerm} 
-            onChange={handleSearchChange} 
+            value={localSearchTerm}
+            onChange={handleSearchChange}
             sx={{
               bgcolor: 'white',
               borderRadius: 1,
@@ -88,7 +88,6 @@ function Navbar() {
           />
         </Box>
 
-        {/* Links de Navegação */}
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
           <Button component={Link} to="/categorias" color="inherit" sx={{ textTransform: 'none', '&:hover': { color: 'lightblue' } }}>
             <CategoryIcon sx={{ mr: 0.5 }} /> Categorias
@@ -96,10 +95,34 @@ function Navbar() {
           <Button component={Link} to="/produtos" color="inherit" sx={{ textTransform: 'none', '&:hover': { color: 'lightblue' } }}>
             <InventoryIcon sx={{ mr: 0.5 }} /> Produtos
           </Button>
-          <Button component={Link} to="/perfil" sx={{ textTransform: 'none', color: '#FFD700', fontWeight: 'bold', '&:hover': { color: '#FFEB3B' } }}>
-            <PersonIcon sx={{ mr: 0.5 }} /> Perfil
-          </Button>
-          <ShoppingCartIcon sx={{ '&:hover': { color: 'lightblue' }, cursor: 'pointer' }} />
+          {!user && (
+            <Button
+              component={Link}
+              to="/login"
+              sx={{
+                textTransform: 'none',
+                color: '#FFD700',
+                fontWeight: 'bold',
+                '&:hover': { color: '#FFEB3B' }
+              }}
+            >
+              <PersonIcon sx={{ mr: 0.5 }} /> Login
+            </Button>
+          )}
+
+
+          {user ? (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Avatar alt={user.name} src={user.picture} sx={{ width: 32, height: 32 }} />
+              <Button
+                onClick={() => setUser(null)}
+                color="inherit"
+                sx={{ textTransform: 'none', fontSize: '0.875rem', '&:hover': { color: 'red' } }}
+              >
+                Sair
+              </Button>
+            </Box>
+          ) : null}
         </Box>
       </Toolbar>
     </AppBar>
