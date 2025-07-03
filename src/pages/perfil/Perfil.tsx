@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+
 import { Box, Typography, Avatar, Paper, Divider } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 interface UserInfo {
     id?: number;

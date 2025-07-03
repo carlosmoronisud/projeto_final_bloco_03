@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react';
+
 import { useNavigate, useParams } from 'react-router-dom';
-import { getProdutoById, deleteProduto, tratarErro } from '../../services/Service';
+import { getProdutoById, deleteProduto } from '../../services/Service';
 
 import { toast } from 'react-toastify';
 import { CircularProgress } from '@mui/material';
@@ -9,6 +9,8 @@ import { CircularProgress } from '@mui/material';
 // Material UI
 import { Box, Typography, Button, Paper } from '@mui/material';
 import type Produto from '../../components/models/Produto';
+import { useEffect, useState } from 'react';
+import { tratarErro } from '../../services/TratarErro';
 
 function DeleteProduto() {
     const navigate = useNavigate();
@@ -23,6 +25,7 @@ function DeleteProduto() {
             toast.error('ID do produto não fornecido para exclusão.');
             navigate('/produtos');
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id, navigate]);
 
     async function buscarProdutoPorId(produtoId: number) {

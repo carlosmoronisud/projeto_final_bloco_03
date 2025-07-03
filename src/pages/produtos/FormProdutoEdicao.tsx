@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { getAllCategorias as getAllCategoriasService } from '../../services/CategoriaService'; // <-- getAllCategorias do CategoriaService
@@ -13,6 +13,7 @@ import { z } from 'zod';
 import { Box, Typography, Button, TextField, MenuItem, Select, InputLabel, FormControl, CircularProgress } from '@mui/material';
 import { getProdutoById, putProduto } from '../../services/ProdutoService';
 import { tratarErro } from '../../services/TratarErro';
+import { useCallback, useEffect, useState } from 'react';
 
 
 // Esquema de validação para EDIÇÃO de Produto
@@ -88,6 +89,7 @@ function FormProdutoEdicao() {
         } finally {
             setLoadingProduto(false);
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [navigate, tratarErro, getProdutoById, setValue]);
 
     // Efeito para chamar buscarProdutoPorId

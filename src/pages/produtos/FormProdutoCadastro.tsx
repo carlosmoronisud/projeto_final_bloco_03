@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useNavigate } from 'react-router-dom';
-
-
 import { toast } from 'react-toastify';
 import { useForm, Controller } from 'react-hook-form'; // Adicionado Controller
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -10,10 +8,11 @@ import { z } from 'zod';
 // Material UI
 import { Box, Typography, Button, TextField, MenuItem, Select, InputLabel, FormControl, CircularProgress } from '@mui/material';
 import { getAllCategorias } from '../../services/CategoriaService';
-import { postProduto, tratarErro } from '../../services/Service';
+import { postProduto } from '../../services/Service';
 import type Categoria from '../../components/models/Categoria';
 import type Produto from '../../components/models/Produto';
 import { useEffect, useState } from 'react';
+import { tratarErro } from '../../services/TratarErro';
 
 // Esquema de validação para CADASTRO de Produto
 const produtoCadastroSchema = z.object({

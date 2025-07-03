@@ -1,10 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-wrapper-object-types */
 import type Produto from "../components/models/Produto";
 import { atualizar, buscar, cadastrar, deletar } from "./ApiBase";
-
-
-
 
 // URL do seu backend da Farmácia no Render.
 const API_BASE_URL = "https://farmacia-jk1x.onrender.com"; // <<<<< SEM BARRA FINAL AQUI!
@@ -57,6 +53,3 @@ export const putProduto = async (produto: Produto): Promise<Produto> => {
 
 export const deleteProduto = async (id: number): Promise<void> => { /* ... */ await deletar(`/produtos/${id}`); };
 
-// ... (helper tratarErro)
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const tratarErro = (error: any, _mensagemPadrao: string = "Ocorreu um erro!") => { /* ... */ };

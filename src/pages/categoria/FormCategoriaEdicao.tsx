@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from 'react';
+
 import { useNavigate, useParams } from 'react-router-dom';
 
 
@@ -11,6 +11,7 @@ import { Box, Typography, Button, TextField } from '@mui/material';
 import type Categoria from '../../components/models/Categoria';
 import { getCategoriaById, putCategoria } from '../../services/CategoriaService';
 import { tratarErro } from '../../services/TratarErro';
+import { useEffect } from 'react';
 
 
 
@@ -40,6 +41,7 @@ function FormCategoriaEdicao() { // RENOMEADO PARA Edicao
     if (id) {
       buscarCategoriaPorId(Number(id));
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   async function buscarCategoriaPorId(categoriaId: number) {

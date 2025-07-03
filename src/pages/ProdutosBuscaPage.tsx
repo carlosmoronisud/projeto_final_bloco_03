@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect } from 'react';
+
 import { useNavigate, Link, useSearchParams } from 'react-router-dom'; // <<<< Importe useSearchParams
 
 // Removido: import { useSearch } from '../../contexts/SearchContext';
@@ -12,6 +12,7 @@ import { Edit as EditIcon, Delete as DeleteIcon, Add as AddIcon } from '@mui/ico
 import { getAllProdutos, getProdutosByNome } from '../services/ProdutoService';
 import type Produto from '../components/models/Produto';
 import { tratarErro } from '../services/TratarErro';
+import { useEffect, useState } from 'react';
 
 function ProdutosBuscaPage() {
     const [produtos, setProdutos] = useState<Produto[]>([]);
@@ -40,6 +41,7 @@ function ProdutosBuscaPage() {
     // Este useEffect agora depende de searchTerm (lido da URL)
     useEffect(() => {
         buscarProdutosFiltrados();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchTerm]); // Re-busque produtos sempre que searchTerm (na URL) mudar
 
     if (loading) {

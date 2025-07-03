@@ -1,4 +1,4 @@
-import React from 'react';
+// src/pages/home/Home.tsx
 import { Box, Typography, Button } from '@mui/material'; // Removido Grid
 import { Link } from 'react-router-dom';
 
