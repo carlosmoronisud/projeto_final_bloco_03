@@ -1,4 +1,8 @@
-{
+{  
+  "engines": {
+  "node": "20.x"
+  },
+
   "name": "projeto_final_bloco_03",
   "private": true,
   "version": "0.0.0",
@@ -45,4 +49,6 @@
     "typescript-eslint": "^8.34.1",
     "vite": "^7.0.0"
   }
+  
+
 }

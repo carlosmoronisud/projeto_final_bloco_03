@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type Produto from "../components/models/Produto";
 import { atualizar, buscar, cadastrar, deletar } from "./ApiBase";
 
