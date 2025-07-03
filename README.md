@@ -1,69 +1,179 @@
-# React + TypeScript + Vite
+# Projeto Farmácia - Frontend com React + Vite + Google Auth
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<br />
 
-Currently, two official plugins are available:
+<div align="center">     
+     <img src="https://i.imgur.com/AzshGmS.png" title="source: imgur.com" width="50%"/>
+</div> 
+<br /> 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<div align="center">   
+    <img src="https://img.shields.io/github/languages/top/carlosmoronisud/projeto-final-bloco-03-teal?style=flat-square" />
+    <img src="https://img.shields.io/github/repo-size/carlosmoronisud/projeto-final-bloco-03-teal?style=flat-square" />   
+    <img src="https://img.shields.io/github/languages/count/carlosmoronisud/projeto-final-bloco-03-teal?style=flat-square" />
+    <img src="https://img.shields.io/github/last-commit/carlosmoronisud/projeto-final-bloco-03-teal?style=flat-square" />
+    <img src="https://img.shields.io/github/issues/carlosmoronisud/projeto-final-bloco-03-teal?style=flat-square" />
+    <img src="https://img.shields.io/badge/status-em%20desenvolvimento-yellow?style=flat-square" /> 
+</div>
 
-## Expanding the ESLint configuration
+<br />
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 1. Descrição
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+O **Projeto Farmácia** é uma aplicação web completa desenvolvida com **React**, **Vite** e **TypeScript**, com autenticação via **Google OAuth**. Ela se conecta a uma API backend em Java Spring Boot para gerenciar **produtos** e **categorias** de uma farmácia.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Funcionalidades:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Login com conta Google
+- Cadastro, edição e exclusão de produtos
+- Cadastro, edição e exclusão de categorias
+- Relacionamento: cada produto pertence a uma categoria
+- Busca de produtos por nome
+- Rotas protegidas para ações de CRUD
+- Interface responsiva com Tailwind CSS e Material UI
+
+<br />
+
+## 2. Backend (API Spring Boot)
+
+🔗 A aplicação consome a API hospedada em:
+
+[https://farmacia-ug0p.onrender.com/swagger-ui/swagger-ui/index.html](https://farmacia-ug0p.onrender.com/swagger-ui/swagger-ui/index.html)
+
+> ⚠️ Este endpoint é **obrigatório** para o funcionamento da aplicação. Sem ele, o frontend não carrega os dados.
+
+<br />
+
+## 3. Tecnologias Utilizadas
+
+| Tecnologia             | Finalidade                              |
+| ---------------------- | ---------------------------------------- |
+| **React**              | Criação de interfaces reativas           |
+| **TypeScript**         | Tipagem estática em JavaScript           |
+| **Vite**               | Ferramenta de build rápida e leve        |
+| **Tailwind CSS**       | Estilização com utilitários CSS          |
+| **Material UI**        | Componentes visuais responsivos          |
+| **Axios**              | Requisições HTTP para a API              |
+| **React Router DOM**   | Roteamento SPA                           |
+| **Google OAuth**       | Autenticação de usuários com o Google    |
+| **Context API**        | Controle de login/logout global          |
+
+<br />
+
+## 4. Pré-requisitos
+
+Antes de rodar o projeto, é necessário ter:
+
+- [Node.js](https://nodejs.org/) (16+)
+- [Git](https://git-scm.com/)
+- [Visual Studio Code](https://code.visualstudio.com/)
+
+<br />
+
+## 5. Como executar o projeto localmente
+
+1. **Clone o repositório:**
+
+```bash
+git clone https://github.com/carlosmoronisud/projeto-final-bloco-03-teal.git
+
+```
+##Acesse a pasta do projeto:
+
+```bash
+
+cd projeto-final-bloco-03-teal
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Instale as dependências:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+npm install
 ```
+
+Execute o projeto:
+
+
+```bash
+
+npm run dev
+```
+```bash
+Abra no navegador:
+
+http://localhost:5173
+Lembre-se: a API precisa estar rodando em https://farmacia-ug0p.onrender.com.
+```
+<br />
+##6. Deploy
+✅ O projeto está publicado em produção em:
+
+```bash
+
+🔗 https://projeto-final-bloco-03-teal.vercel.app/
+
+```
+
+Backend consumido diretamente do Render.
+
+<br />
+
+#7. Estrutura de Diretórios
+```bash
+
+src/
+│
+├── assets/           → Imagens e ícones
+├── components/       → Componentes visuais reutilizáveis
+├── contexts/         → Lógica de autenticação com Google
+├── models/           → Tipagens de Categoria e Produto
+├── pages/            → Telas de CRUD, Home e Perfil
+├── services/         → Axios e serviços da API
+├── utils/            → Toasts e funções auxiliares
+├── App.tsx           → Componente raiz e rotas
+├── main.tsx          → Ponto de entrada
+└── index.css         → Estilização com Tailwind
+
+```
+
+8. Funcionalidades em Destaque
+🔒 Rotas protegidas com PrivateRoute para edição/cadastro
+
+🔍 Busca de produtos por nome com query na URL
+
+📦 Relação entre categoria e produto persistente
+
+☁️ Login via Google OAuth com foto e botão de logout
+
+<br />
+
+9. Melhorias Futuras
+Upload de imagem para produtos
+
+Filtros por categoria
+
+Dashboard de administração
+
+Integração com sistema de estoque real
+
+<br />
+
+#10. Contribuindo
+
+Contribuições são bem-vindas!
+
+🐛 Relate bugs abrindo uma issue
+
+✨ Envie melhorias com um pull request
+
+💬 Compartilhe com colegas aprendizes
+
+<br />
+
+##11. Contato
+Desenvolvido com 💊 por Carlos Moroni
+
+Em caso de dúvidas, sugestões ou colaborações, sinta-se à vontade para entrar em contato pelo GitHub.
+
+
